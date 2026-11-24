@@ -9,11 +9,11 @@ use anyhow::{Context as _, Result};
 pub enum Effect {
     Edit(Vec<PathBuf>),
     Shell(PathBuf),
-    /// A result for the caller, not an external process.
+    /// A result for the caller
     Directory(PathBuf),
 }
 
-/// Check executable availability, rather than only testing file existence.
+/// Check executable availability
 pub fn on_path(program: &str) -> bool {
     std::env::var_os("PATH").is_some_and(|paths| {
         std::env::split_paths(&paths).any(|dir| {

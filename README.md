@@ -1,9 +1,8 @@
 # Picc menu
 
-A Rust program and library for picker-driven terminal tools, using
-[skim](https://github.com/skim-rs/skim) directly. Inspired by the Neovim
-`pick_menu` and [skim-run](https://github.com/skim-rs/skim-run).
-No `sk` subprocess is needed at runtime.
+A launcher, simple UI engine, OS-level picker (like Telescope.nvim for the OS) using
+[skim](https://github.com/skim-rs/skim) directly. Inspired by Neovim
+pickers and [skim-run](https://github.com/skim-rs/skim-run), dmenu.
 
 ## Build and run
 
@@ -73,49 +72,10 @@ client and the parent picker launcher:
 map kitty_mod+p launch --type=overlay --cwd=current /Users/martim.moura/picc_menu/target/release/picc-menu
 ```
 
-An optional snippet is in `integration/kitty.conf`. Nothing has been added to
-your active Kitty config. One process and Kitty window serve the menu and all
-subsequent pickers. The selected editor or interactive shell replaces the
-picker process on Unix, so it remains in that same window without an idle
-wrapper process.
 
-## Change the calling shell's directory
 
-A child process cannot change its parent's cwd. `browse` opens a **new**
-interactive shell in the selected directory; exiting it returns to the
-original shell. To change the original Fish shell instead:
 
-```fish
-fish_add_path ~/picc_menu/target/release
-source ~/picc_menu/integration/picc-cd.fish
-picc-cd
-```
-
-The wrapper runs `picc-menu choose-dir` inline and consumes one raw
-NUL-delimited path. In this mode Ctrl-o chooses a directory; no editor or
-shell is started. Cancellation writes nothing and exits 130. Spaces, quotes,
-and newlines do not require `eval` or shell escaping. Do not launch
-`choose-dir` in a detached window expecting its output to change your shell.
-
-## Library structure
-
-`Context` owns the absolute cwd and hidden-path policy. `Registry` holds
-Rust `Tool` implementations with stable IDs, labels, and availability checks.
-A tool issues `Request` values through the `Picker` trait and returns an
-optional `Effect`. `SkimPicker` is the production adapter; tests substitute
-a fake picker.
-
-A request owns a `Source`, prompt, header, multi-selection setting, and
-named accept bindings. A source emits `Entry` values and stops when the
-sink returns false. Entries hold a display label plus a typed `Value`;
-paths are never reconstructed from their labels. Built-in sources are
-`Vec<Entry>`, recursive `Files`, and immediate-child `Directories`.
-
-The adapter sends the first candidate immediately, then batches up to 64
-items through an eight-batch bounded queue. Producer cancellation and joining
-are centralized. Skim still retains received candidates for matching; this is
-not a bounded-total-memory index. All terminal operations stay on the calling
-thread. Tool effects execute only after the picker releases the terminal.
+## Development
 
 Add a tool by implementing `tools::Tool` and calling `Registry::register`.
 It can issue multiple sequential picker requests without changing the engine
@@ -124,19 +84,6 @@ or Kitty code. `examples/custom_tool.rs` is a complete example.
 ```sh
 cargo run --example custom_tool
 ```
-
-Built-in effects use argument arrays, never interpolated shell commands.
-Neovim receives `--` before paths. `SKIM_DEFAULT_OPTIONS` is intentionally
-not imported: environment bindings must not replace the framework's controls
-or introduce command execution. Preview subprocesses, a resident daemon,
-history, cached indexes, and dynamic plugins are deliberately out of scope.
-
-A source error is returned when the active picker closes; it does not yet
-interrupt the UI. Filesystem syscalls blocked on a slow mount cannot be
-interrupted by cooperative cancellation. These are current limitations, not
-promises of instantaneous cancellation.
-
-## Development
 
 Clippy uses its standard lint set. Rustfmt uses its defaults. The native
 `rust-analyzer.toml` selects Clippy diagnostics on save; the minimal
@@ -162,7 +109,3 @@ Kitty windows **only** with `--run`:
 python3 scripts/launch_probe.py
 python3 scripts/launch_probe.py --run --repetitions 10
 ```
-
-See `DESIGN.md` for the pre-implementation plan, `docs/skim-run.md` for the
-reference review, and `docs/performance.md` for measured launch results,
-methodology, and remaining performance work.
