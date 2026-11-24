@@ -122,6 +122,10 @@ def main():
             session.until("Directories>")
             session.send(b"\x1b")
             assert session.finish(130) == b""
+        with Session(binary, root, "menu") as session:
+            session.until("Tools>")
+            session.send(b"\x03")  # Ctrl-c must also restore terminal state.
+            assert session.finish() == b""
 
         # Stub Neovim checks argv, not shell-escaped display text.
         bindir = root / "bin"
@@ -146,7 +150,24 @@ def main():
             session.send(b"\r")
             session.finish()
         assert json.loads(result.read_text()) == ["--", *(str(path) for path in files)]
-    print(json.dumps({"pty_workflows": 4, "first_menu_output_ms": round(first_ms, 2),
+
+        shell = bindir / "test-shell"
+        shell_result = root / "shell-result.json"
+        shell.write_text(
+            "#!/usr/bin/env python3\nimport json, os, sys\n"
+            "with open(os.environ['PICC_TEST_OUTPUT'], 'w') as f: "
+            "json.dump({'cwd': os.getcwd(), 'args': sys.argv[1:]}, f)\n"
+        )
+        shell.chmod(0o755)
+        with Session(binary, root, "browse", {
+            "SHELL": str(shell), "PICC_TEST_OUTPUT": str(shell_result)
+        }) as session:
+            session.until("Directories>")
+            session.send(b"unique-child")
+            session.send(b"\x0f")
+            session.finish()
+        assert json.loads(shell_result.read_text()) == {"cwd": str(child), "args": ["-i"]}
+    print(json.dumps({"pty_workflows": 6, "first_menu_output_ms": round(first_ms, 2),
                       "terminal_restored": True}))
 
 
