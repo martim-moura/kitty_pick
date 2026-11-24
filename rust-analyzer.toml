@@ -1,0 +1,3 @@
+# Use standard rust-analyzer defaults, with Clippy diagnostics on save.
+[check]
+command = "clippy"

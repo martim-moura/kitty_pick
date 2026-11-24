@@ -1,8 +1,8 @@
 # Terminal menu: implementation plan
 
-Status: planned before implementation. Binary `termenu`, library `terminal_menu`.
-The picker project is called **skim** (crate `skim`, executable `sk`); “seek”
-is interpreted as skim because the requested executable is `sk`.
+Status: planned before implementation. Project `~/picc_menu`, binary
+`picc-menu`, library `picc_menu`. Picker: [skim](https://github.com/skim-rs/skim),
+crate `skim`, executable `~/.cargo/bin/sk` (installed version 5.9.0).
 
 ## First implementation
 
