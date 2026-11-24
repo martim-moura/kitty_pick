@@ -25,10 +25,10 @@ def launch_command(surface, marker, child, instance_group=None):
             command += ["--single-instance", "--wait-for-single-instance-window-close"]
             if instance_group:
                 command += ["--instance-group", instance_group]
-        return command + ["--directory", str(marker.parent), "--title", "Picc launch probe"] + diagnostic
+        return command + ["--directory", str(marker.parent), "--title", "Kitty pick launch probe"] + diagnostic
     command = ["kitty", "@", "launch", "--type", "os-panel" if surface == "panel" else surface,
                "--dont-take-focus", "--wait-for-child-to-exit", "--response-timeout", "15",
-               "--title", "Picc launch probe", "--cwd", str(marker.parent)]
+               "--title", "Kitty pick launch probe", "--cwd", str(marker.parent)]
     if window := os.environ.get("KITTY_WINDOW_ID"):
         command += ["--source-window", "id:" + window, "--match", "window_id:" + window]
     if surface == "panel":
@@ -55,7 +55,7 @@ def main():
     if args.repetitions < 1:
         parser.error("--repetitions must be positive")
     surfaces = args.surfaces or list(SURFACES)
-    with tempfile.TemporaryDirectory(prefix="picc-launch-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="kitty-pick-launch-") as tmp:
         # Keep child entry point accessible to independent Kitty processes.
         child = Path(__file__).resolve()
         results = []

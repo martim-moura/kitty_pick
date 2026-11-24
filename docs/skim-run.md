@@ -14,33 +14,33 @@ then dispatches it. Named accept actions support switching modes without
 another executable invocation. Candidate types implement `SkimItem`, keeping
 matching/display text distinct from output identity.
 
-Picc menu applies those ideas through `Tool`, `Source`, `Picker`, and
+Kitty pick applies those ideas through `Tool`, `Source`, `Picker`, and
 `Effect`. Tool-specific Rust code owns the interaction; shared code owns
 candidate transport, terminal entry/exit, and launching. Named accept actions
 implement browse/open/edit and parent navigation.
 
 ## Deliberate differences
 
-The reference uses skim 0.20.2. Picc menu pins skim 5.9.0, matching the installed
+The reference uses skim 0.20.2. Kitty pick pins skim 5.9.0, matching the installed
 `~/.cargo/bin/sk`; that API takes owned options and receives batches of items.
 
-The reference's `get` returns a complete vector before skim starts. Picc menu
+The reference's `get` returns a complete vector before skim starts. Kitty pick
 streams from a worker with bounded batches, sends the first candidate
 immediately, checks cancellation between candidates, and joins the worker.
 This avoids waiting for a full recursive walk before showing the picker.
 
 The reference's mode transitions substitute strings into an accept action,
-split on spaces, and update CLI arguments. Picc menu passes typed path
+split on spaces, and update CLI arguments. Kitty pick passes typed path
 payloads and effects instead. Spaces, quotes, control characters, and
 non-UTF-8 path bytes do not need an escaping/parsing round trip.
 
 The reference lets tools mutate arbitrary skim options, parse
-`SKIM_DEFAULT_OPTIONS`, and execute shell bindings. Picc menu exposes a
+`SKIM_DEFAULT_OPTIONS`, and execute shell bindings. Kitty pick exposes a
 smaller request protocol and intentionally does not import environment
 options that could replace its bindings or start commands. All built-in
 effects use argument vectors after the picker closes.
 
-The reference's main dispatcher discards errors from `mode.run`. Picc menu
+The reference's main dispatcher discards errors from `mode.run`. Kitty pick
 propagates tool, source, picker, and launch errors. Source errors are returned
 when the active picker closes; they do not yet interrupt its UI.
 

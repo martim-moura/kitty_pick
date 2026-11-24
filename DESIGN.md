@@ -1,8 +1,8 @@
 # Terminal menu: implementation plan
 
 Status: initial plan written before implementation; core implemented and validated.
-Project `~/picc_menu`, binary
-`picc-menu`, library `picc_menu`. Picker: [skim](https://github.com/skim-rs/skim),
+Project `~/kitty_pick`, binary
+`kitty-pick`, library `kitty_pick`. Picker: [skim](https://github.com/skim-rs/skim),
 crate `skim`, executable `~/.cargo/bin/sk` (installed version 5.9.0).
 
 ## First implementation

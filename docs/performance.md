@@ -25,7 +25,7 @@ then ran `launch_probe.py --surface single-instance --instance-group GROUP
 persistent configuration was installed.
 
 All three remote surfaces were also tested with the actual release
-`picc-menu launch` command, not just the probe: the real menu opened and
+`kitty-pick launch` command, not just the probe: the real menu opened and
 closed on Escape. Those tests are functional checks, not latency measurements.
 
 ## Picker and source paths
@@ -64,7 +64,7 @@ choice; this sample does not establish a meaningful overlay-versus-panel
 advantage.
 
 For a hotkey, use Kitty's native `launch` action. It removes the
-`kitty @` client and parent `picc-menu launch` process from the path.
+`kitty @` client and parent `kitty-pick launch` process from the path.
 That process-count reduction is structural; native-action first-frame latency
 has not been measured here.
 

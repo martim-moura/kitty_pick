@@ -2,7 +2,7 @@
 use std::{path::PathBuf, time::Instant};
 
 use anyhow::Result;
-use picc_menu::source::{Files, Source};
+use kitty_pick::source::{Files, Source};
 
 fn main() -> Result<()> {
     let root =

@@ -1,4 +1,4 @@
-# Picc menu
+# Kitty pick
 
 A launcher, simple UI engine, OS-level picker (like Telescope.nvim for the OS) using
 [skim](https://github.com/skim-rs/skim) directly. Inspired by Neovim
@@ -12,13 +12,13 @@ Cargo-compatible version ranges; `Cargo.lock` records the tested resolution.
 Run `cargo update` to refresh it.
 
 ```sh
-cd ~/picc_menu
+cd ~/kitty_pick
 cargo build --release --locked
-./target/release/picc-menu
-./target/release/picc-menu --cwd ~/some-project edit
-./target/release/picc-menu browse
-./target/release/picc-menu --hidden browse
-./target/release/picc-menu tools
+./target/release/kitty-pick
+./target/release/kitty-pick --cwd ~/some-project edit
+./target/release/kitty-pick browse
+./target/release/kitty-pick --hidden browse
+./target/release/kitty-pick tools
 ```
 
 The inherited private Cargo registry required credentials in this session;
@@ -43,12 +43,12 @@ selection does not launch Neovim.
 ## Kitty surfaces
 
 ```sh
-./target/release/picc-menu launch
-./target/release/picc-menu --cwd ~/some-project launch --surface overlay edit
-./target/release/picc-menu launch --surface os-window browse
-./target/release/picc-menu launch --surface panel
-./target/release/picc-menu launch --surface standalone
-./target/release/picc-menu launch --surface single-instance
+./target/release/kitty-pick launch
+./target/release/kitty-pick --cwd ~/some-project launch --surface overlay edit
+./target/release/kitty-pick launch --surface os-window browse
+./target/release/kitty-pick launch --surface panel
+./target/release/kitty-pick launch --surface standalone
+./target/release/kitty-pick launch --surface single-instance
 ```
 
 Overlay is the default. Overlay, OS-window, and panel launches use
@@ -64,12 +64,12 @@ existing compatible Kitty instance, or starts one if none exists. These two
 launch modes are asynchronous; errors after process creation belong to Kitty.
 
 For repeated use inside Kitty, prefer its **native launch action** instead of
-a shell invoking `picc-menu launch`. It avoids starting the remote-control
+a shell invoking `kitty-pick launch`. It avoids starting the remote-control
 client and the parent picker launcher:
 
 ```conf
 # Replace the executable path if you install elsewhere.
-map kitty_mod+p launch --type=overlay --cwd=current /Users/martim.moura/picc_menu/target/release/picc-menu
+map kitty_mod+p launch --type=overlay --cwd=current /Users/martim.moura/kitty_pick/target/release/kitty-pick
 ```
 
 
@@ -94,7 +94,7 @@ editor config is required or modified.
 cargo fmt --all -- --check
 cargo clippy --all-targets --all-features --no-deps -- -D warnings
 cargo test --all-targets --locked
-python3 scripts/pty_smoke.py target/debug/picc-menu
+python3 scripts/pty_smoke.py target/debug/kitty-pick
 git diff --check
 ```
 

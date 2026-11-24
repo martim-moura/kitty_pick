@@ -38,7 +38,7 @@ pub fn command(
                     _ => unreachable!(),
                 },
             ]);
-            command.args(["--title", "Picc menu"]);
+            command.args(["--title", "Kitty pick"]);
             if let Some(window) = source_window {
                 let mut source = std::ffi::OsString::from("id:");
                 source.push(window);
@@ -79,7 +79,7 @@ pub fn command(
             command
                 .arg("--directory")
                 .arg(&context.cwd)
-                .args(["--title", "Picc menu"]);
+                .args(["--title", "Kitty pick"]);
         }
     }
     command.arg(executable).arg("--cwd").arg(&context.cwd);
@@ -129,7 +129,7 @@ mod tests {
         let context = Context::new(&root, true)?;
         let command = command(
             Surface::Overlay,
-            Path::new("/a b/picc-menu"),
+            Path::new("/a b/kitty-pick"),
             &context,
             "edit",
             Some(OsStr::new("65")),
@@ -137,7 +137,7 @@ mod tests {
         let args: Vec<_> = command.get_args().map(|s| s.to_string_lossy()).collect();
         assert!(args.windows(2).any(|w| w == ["--source-window", "id:65"]));
         assert!(args.windows(2).any(|w| w == ["--match", "window_id:65"]));
-        assert!(args.iter().any(|a| a == "/a b/picc-menu"));
+        assert!(args.iter().any(|a| a == "/a b/kitty-pick"));
         assert!(
             args.iter()
                 .any(|a| a.as_ref() == context.cwd.to_string_lossy())

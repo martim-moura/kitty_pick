@@ -1,14 +1,14 @@
 [package]
-name = "picc-menu"
+name = "kitty-pick"
 version = "0.1.0"
 edition = "2024"
 publish = false
 
 [lib]
-name = "picc_menu"
+name = "kitty_pick"
 
 [[bin]]
-name = "picc-menu"
+name = "kitty-pick"
 path = "src/main.rs"
 
 [dependencies]

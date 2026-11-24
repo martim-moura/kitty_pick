@@ -1,6 +1,6 @@
 //! A compiled-in tool added without changing the engine or Kitty integration.
 use anyhow::Result;
-use picc_menu::{
+use kitty_pick::{
     Context, Registry,
     effects::{self, Effect},
     picker::{Entry, Picker, Request, SkimPicker, Value},

@@ -2,7 +2,7 @@ use std::{io::Write, path::PathBuf, process::ExitCode};
 
 use anyhow::{Context as _, Result};
 use clap::{Parser, Subcommand, ValueEnum};
-use picc_menu::{
+use kitty_pick::{
     Context, Registry, effects,
     kitty::{self, Surface},
     picker::SkimPicker,
@@ -106,7 +106,7 @@ fn main() -> ExitCode {
     match run() {
         Ok(code) => code,
         Err(error) => {
-            eprintln!("picc-menu: {error:#}");
+            eprintln!("kitty-pick: {error:#}");
             ExitCode::FAILURE
         }
     }

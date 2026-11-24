@@ -19,7 +19,7 @@ The machine's inherited Cargo configuration redirects crates.io to a private
 Artifactory registry without a usable token in this session. No credentials
 or global configuration were changed. Verification used a temporary
 `CARGO_HOME` without that configuration and invoked Cargo from `/tmp`
-with `--manifest-path /Users/martim.moura/picc_menu/Cargo.toml`. Running from
+with `--manifest-path /Users/martim.moura/kitty_pick/Cargo.toml`. Running from
 `/tmp` matters: Cargo also discovers configuration in parent directories of
 the current working directory, independently of `CARGO_HOME`.
 
@@ -31,9 +31,9 @@ registry through the usual local workflow or use an isolated Cargo home:
 build_home=$(mktemp -d)
 cd /tmp
 CARGO_HOME="$build_home" cargo +nightly build --release --locked \
-  --manifest-path "$HOME/picc_menu/Cargo.toml"
+  --manifest-path "$HOME/kitty_pick/Cargo.toml"
 ```
 
 The latter downloads dependencies from crates.io into the temporary home.
-The already built executable at `~/picc_menu/target/release/picc-menu`
+The already built executable at `~/kitty_pick/target/release/kitty-pick`
 does not need Cargo, Rust, Python, or `sk` at runtime.

@@ -1,7 +1,7 @@
 use std::collections::VecDeque;
 
 use anyhow::Result;
-use picc_menu::{
+use kitty_pick::{
     Context, Registry,
     effects::Effect,
     picker::{Entry, Picker, Request, Selection, Value},

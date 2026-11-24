@@ -95,10 +95,10 @@ class Session:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("binary", nargs="?", type=Path, default=Path("target/debug/picc-menu"))
+    parser.add_argument("binary", nargs="?", type=Path, default=Path("target/debug/kitty-pick"))
     args = parser.parse_args()
     binary = args.binary.resolve()
-    with tempfile.TemporaryDirectory(prefix="picc-pty-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="kitty-pick-pty-") as tmp:
         root = Path(tmp).resolve()
         child = root / "unique-child"
         child.mkdir()
@@ -134,13 +134,13 @@ def main():
         result = root / "editor-args.json"
         editor.write_text(
             "#!/usr/bin/env python3\nimport json, os, sys\n"
-            "with open(os.environ['PICC_TEST_OUTPUT'], 'w') as f: json.dump(sys.argv[1:], f)\n"
+            "with open(os.environ['KITTY_PICK_TEST_OUTPUT'], 'w') as f: json.dump(sys.argv[1:], f)\n"
         )
         editor.chmod(0o755)
         files = [root / "alpha\n'one", root / "beta;two"]
         for path in files:
             path.write_text("")
-        env = {"PATH": str(bindir) + os.pathsep + os.environ["PATH"], "PICC_TEST_OUTPUT": str(result)}
+        env = {"PATH": str(bindir) + os.pathsep + os.environ["PATH"], "KITTY_PICK_TEST_OUTPUT": str(result)}
         with Session(binary, root, "edit", env) as session:
             session.until("Files>")
             session.send(b"alpha")
@@ -155,12 +155,12 @@ def main():
         shell_result = root / "shell-result.json"
         shell.write_text(
             "#!/usr/bin/env python3\nimport json, os, sys\n"
-            "with open(os.environ['PICC_TEST_OUTPUT'], 'w') as f: "
+            "with open(os.environ['KITTY_PICK_TEST_OUTPUT'], 'w') as f: "
             "json.dump({'cwd': os.getcwd(), 'args': sys.argv[1:]}, f)\n"
         )
         shell.chmod(0o755)
         with Session(binary, root, "browse", {
-            "SHELL": str(shell), "PICC_TEST_OUTPUT": str(shell_result)
+            "SHELL": str(shell), "KITTY_PICK_TEST_OUTPUT": str(shell_result)
         }) as session:
             session.until("Directories>")
             session.send(b"unique-child")
