@@ -217,6 +217,27 @@ mod tests {
         Ok(())
     }
 
+    #[test]
+    fn batches_preserve_all_candidates_and_flush_the_tail() -> Result<()> {
+        let entries: Vec<_> = (0..4097)
+            .map(|i| Entry::new(format!("candidate-{i:05}"), Value::Tool(i.to_string())))
+            .collect();
+        let selection = SkimPicker
+            .run(
+                Request::new("> ", "", entries.clone()),
+                Some("candidate".into()),
+            )?
+            .expect("filter output");
+        assert_eq!(selection.entries.len(), entries.len());
+        let mut actual: Vec<_> = selection.entries.into_iter().map(|e| e.label).collect();
+        actual.sort();
+        assert_eq!(
+            actual,
+            entries.into_iter().map(|e| e.label).collect::<Vec<_>>()
+        );
+        Ok(())
+    }
+
     struct Endless;
     impl Source for Endless {
         fn produce(self: Box<Self>, emit: &mut dyn FnMut(Entry) -> bool) -> Result<()> {
