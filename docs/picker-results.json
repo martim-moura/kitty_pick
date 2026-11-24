@@ -1,0 +1,23 @@
+{
+  "menu_output_samples_ms": [
+    47.39020799752325,
+    49.27933297585696,
+    53.37154190056026,
+    54.57279202528298,
+    52.737792022526264,
+    58.219708036631346,
+    55.17533398233354,
+    54.98170794453472,
+    54.705167072825134,
+    49.16991700883955
+  ],
+  "menu_median_ms": 53.97216696292162,
+  "source_samples": [
+    "files=10000 first_us=2217 total_ms=11.389",
+    "files=10000 first_us=796 total_ms=9.348",
+    "files=10000 first_us=712 total_ms=9.122",
+    "files=10000 first_us=735 total_ms=8.717",
+    "files=10000 first_us=800 total_ms=8.335"
+  ],
+  "notes": "Menu timing includes Python PTY supervisor startup, measures received output not rendered pixels; synthetic source has 10000 empty files in 10 directories."
+}

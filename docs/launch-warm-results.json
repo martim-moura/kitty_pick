@@ -1,0 +1,25 @@
+{
+  "kitty": "kitty 0.50.0 created by Kovid Goyal",
+  "measurement": "child startup marker, NOT first visible frame",
+  "results": [
+    {
+      "surface": "single-instance",
+      "samples": [
+        {
+          "child_started_ms": 141.72791701275855,
+          "lifetime_ms": 322.9584170039743
+        },
+        {
+          "child_started_ms": 140.58233296964318,
+          "lifetime_ms": 315.20370801445097
+        },
+        {
+          "child_started_ms": 150.30191710684448,
+          "lifetime_ms": 320.7079590065405
+        }
+      ],
+      "median_child_started_ms": 141.72791701275855,
+      "p95_child_started_ms": 150.30191710684448
+    }
+  ]
+}

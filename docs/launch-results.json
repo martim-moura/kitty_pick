@@ -1,0 +1,101 @@
+{
+  "kitty": "kitty 0.50.0 created by Kovid Goyal",
+  "measurement": "child startup marker, NOT first visible frame",
+  "results": [
+    {
+      "surface": "overlay",
+      "samples": [
+        {
+          "child_started_ms": 115.04854098893702,
+          "lifetime_ms": 273.45687500201166
+        },
+        {
+          "child_started_ms": 123.63745796028525,
+          "lifetime_ms": 284.36154196970165
+        },
+        {
+          "child_started_ms": 112.07279202062637,
+          "lifetime_ms": 273.87570799328387
+        }
+      ],
+      "median_child_started_ms": 115.04854098893702,
+      "p95_child_started_ms": 123.63745796028525
+    },
+    {
+      "surface": "os-window",
+      "samples": [
+        {
+          "child_started_ms": 141.01599995046854,
+          "lifetime_ms": 297.7607080247253
+        },
+        {
+          "child_started_ms": 148.76408397685736,
+          "lifetime_ms": 306.09887500759214
+        },
+        {
+          "child_started_ms": 153.0828339746222,
+          "lifetime_ms": 313.7644169619307
+        }
+      ],
+      "median_child_started_ms": 148.76408397685736,
+      "p95_child_started_ms": 153.0828339746222
+    },
+    {
+      "surface": "panel",
+      "samples": [
+        {
+          "child_started_ms": 143.30595906358212,
+          "lifetime_ms": 304.86158409621567
+        },
+        {
+          "child_started_ms": 119.89837500732392,
+          "lifetime_ms": 280.36400000564754
+        },
+        {
+          "child_started_ms": 116.28712492529303,
+          "lifetime_ms": 276.2287090299651
+        }
+      ],
+      "median_child_started_ms": 119.89837500732392,
+      "p95_child_started_ms": 143.30595906358212
+    },
+    {
+      "surface": "standalone",
+      "samples": [
+        {
+          "child_started_ms": 996.3456250261515,
+          "lifetime_ms": 1207.40195910912
+        },
+        {
+          "child_started_ms": 644.2814170150086,
+          "lifetime_ms": 850.1301250653341
+        },
+        {
+          "child_started_ms": 636.3499170402065,
+          "lifetime_ms": 842.8427920443937
+        }
+      ],
+      "median_child_started_ms": 644.2814170150086,
+      "p95_child_started_ms": 996.3456250261515
+    },
+    {
+      "surface": "single-instance",
+      "samples": [
+        {
+          "child_started_ms": 633.9335000375286,
+          "lifetime_ms": 846.0735830012709
+        },
+        {
+          "child_started_ms": 606.9069169461727,
+          "lifetime_ms": 812.5924170017242
+        },
+        {
+          "child_started_ms": 628.2880420330912,
+          "lifetime_ms": 836.0104170860723
+        }
+      ],
+      "median_child_started_ms": 628.2880420330912,
+      "p95_child_started_ms": 633.9335000375286
+    }
+  ]
+}
