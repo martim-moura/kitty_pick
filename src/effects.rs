@@ -34,8 +34,13 @@ pub fn command(effect: &Effect, cwd: &Path) -> Result<Command> {
     let mut command = match effect {
         Effect::Edit(paths) => {
             anyhow::ensure!(!paths.is_empty(), "no files selected");
+            let editor_cwd = if paths.len() == 1 && paths[0].is_dir() {
+                paths[0].as_path()
+            } else {
+                cwd
+            };
             let mut command = Command::new("nvim");
-            command.arg("--").args(paths).current_dir(cwd);
+            command.arg("--").args(paths).current_dir(editor_cwd);
             command
         }
         Effect::Shell(path) => {
@@ -75,6 +80,15 @@ pub fn execute(effect: &Effect, cwd: &Path) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn directory_editor_uses_selected_directory_as_cwd() -> Result<()> {
+        let temp = tempfile::tempdir()?;
+        let selected = temp.path().canonicalize()?;
+        let command = command(&Effect::Edit(vec![selected.clone()]), Path::new("/"))?;
+        assert_eq!(command.get_current_dir(), Some(selected.as_path()));
+        Ok(())
+    }
+
     #[test]
     fn editor_arguments_are_not_shell_code() -> Result<()> {
         let paths = vec![PathBuf::from("-c quit"), PathBuf::from("a\n'$(touch nope)")];
